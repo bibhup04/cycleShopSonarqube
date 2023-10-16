@@ -1,0 +1,5 @@
+        var springSecurityUserEntity = User.withUsername(myUserEntity.getName())
+                                            .password(
+                                            myUserEntity.getPassword())
+//                                            .roles(myUserEntity.getRole())
+                                            .build();

@@ -1,0 +1,208 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>TalentSprint cycle shop</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Cycle shop</h1>-->
+<!--    <table th:each="cycle : ${allCycles}">-->
+<!--        <th>-->
+<!--            <td>Brand</td>-->
+<!--            <td>Stock available</td>-->
+<!--        </th>-->
+<!--        <tr>-->
+<!--            <td th:text="${cycle.brand}">Brand</td>-->
+<!--            <td th:text="${cycle.numAvailable}">0</td>-->
+<!--            <td> -->
+<!--                <form action="#" th:action="@{./{id}/borrow(id=${cycle.id})}" method="get">-->
+<!--                    <input type="text" name="count">-->
+<!--                    <input type="submit" value="BORROW">-->
+<!--                </form>-->
+<!--                <form action="#" th:action="@{./{id}/return(id=${cycle.id})}" method="get">-->
+<!--                    <input type="text" name="count">-->
+<!--                    <input type="submit" value="RETURN">-->
+<!--                </form>-->
+<!--            </td>-->
+<!--            <td>-->
+
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</body>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>TalentSprint cycle shop</title>-->
+<!--     Include jQuery library for AJAX -->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Cycle shop</h1>-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--            <tr>-->
+<!--                <th>Brand</th>-->
+<!--                <th>Stock available</th>-->
+<!--                <th>Actions</th>-->
+<!--            </tr>-->
+<!--        </thead>-->
+<!--        <tbody id="cycleTableBody">-->
+<!--             Table data will be populated here using AJAX -->
+<!--        </tbody>-->
+<!--    </table>-->
+
+<!--     JavaScript for making AJAX request -->
+<!--    <script>-->
+<!--        $(document).ready(function() {-->
+           
+<!--            $.get("/cycle/list-data", function(data) {-->
+                
+<!--                var tableBody = $("#cycleTableBody");-->
+<!--                tableBody.empty(); -->
+
+<!--                $.each(data, function(index, cycle) {-->
+<!--                    var row = $("<tr>");-->
+<!--                    row.append($("<td>").text(cycle.brand));-->
+<!--                    row.append($("<td>").text(cycle.numAvailable));-->
+<!--                    var actionsColumn = $("<td>");-->
+<!--                    actionsColumn.append(-->
+<!--                        $("<form>")-->
+<!--                            .attr("action", "./" + cycle.id + "/borrow")-->
+<!--                            .attr("method", "get")-->
+<!--                            .append(-->
+<!--                                $("<input>").attr("type", "text").attr("name", "count")-->
+<!--                            )-->
+<!--                            .append(-->
+<!--                                $("<input>").attr("type", "submit").attr("value", "BORROW")-->
+<!--                            )-->
+<!--                    );-->
+<!--                    actionsColumn.append(-->
+<!--                        $("<form>")-->
+<!--                            .attr("action", "./" + cycle.id + "/return")-->
+<!--                            .attr("method", "get")-->
+<!--                            .append(-->
+<!--                                $("<input>").attr("type", "text").attr("name", "count")-->
+<!--                            )-->
+<!--                            .append(-->
+<!--                                $("<input>").attr("type", "submit").attr("value", "RETURN")-->
+<!--                            )-->
+<!--                    );-->
+<!--                    row.append(actionsColumn);-->
+<!--                    tableBody.append(row);-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TalentSprint cycle shop</title>
+    <!-- Include jQuery library for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Style the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style the form inputs */
+        input[type="text"] {
+            padding: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Style the actions column */
+        .actions {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cycle shop</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Stock available</th>
+                <th style="text-align: center;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="cycleTableBody">
+            <!-- Table data will be populated here using AJAX -->
+        </tbody>
+    </table>
+
+    <!-- JavaScript for making AJAX request -->
+    <script>
+        $(document).ready(function() {
+           
+            $.get("/cycle/list-data", function(data) {
+                
+                var tableBody = $("#cycleTableBody");
+                tableBody.empty(); 
+
+                $.each(data, function(index, cycle) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(cycle.brand));
+                    row.append($("<td>").text(cycle.numAvailable));
+                    var actionsColumn = $("<td>").addClass("actions");
+                    actionsColumn.append(
+                        $("<form>")
+                            .attr("action", "./" + cycle.id + "/borrow")
+                            .attr("method", "get")
+                            .append(
+                                $("<input>").attr("type", "text").attr("name", "count")
+                            )
+                            .append(
+                                $("<input>").attr("type", "submit").attr("value", "BORROW")
+                            )
+                    );
+                    actionsColumn.append(
+                        $("<form>")
+                            .attr("action", "./" + cycle.id + "/return")
+                            .attr("method", "get")
+                            .append(
+                                $("<input>").attr("type", "text").attr("name", "count")
+                            )
+                            .append(
+                                $("<input>").attr("type", "submit").attr("value", "RETURN")
+                            )
+                    );
+                    row.append(actionsColumn);
+                    tableBody.append(row);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
